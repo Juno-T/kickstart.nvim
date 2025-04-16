@@ -987,6 +987,28 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+
+  -- https://github.com/folke/twilight.nvim
+  -- Twilight: toggle twilight
+  -- TwilightEnable: enable twilight
+  -- TwilightDisable: disable twilight
+  {
+    'folke/twilight.nvim',
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      context = 15,
+      expand = {
+        'function',
+        'method',
+        'table',
+      },
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>tt', ':Twilight<cr>', { desc = '[T]oggle [T]wilight' })
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
