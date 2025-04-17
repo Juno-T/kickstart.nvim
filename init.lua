@@ -1029,7 +1029,7 @@ require('lazy').setup({
       },
     },
     config = function()
-      vim.keymap.set('n', '<leader>tt', ':Twilight<cr>', { desc = '[T]oggle [T]wilight' })
+      vim.keymap.set('n', '<leader>tw', ':Twilight<cr>', { desc = '[T]oggle T[W]ilight' })
     end,
   },
   {
