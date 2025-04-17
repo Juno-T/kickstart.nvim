@@ -1053,6 +1053,7 @@ require('lazy').setup({
     -- order to load the plugin when the command is run for the first time
     keys = {
       { '<leader>tg', '<cmd>LazyGit<cr>', desc = '[T]oggle Lazy[G]it' },
+      { '<leader>tG', '<cmd>LazyGitCurrentFile<cr>', desc = '[T]oggle Lazy[G]it on cur. proj.' },
     },
   },
 }, {
