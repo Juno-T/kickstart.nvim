@@ -1086,6 +1086,59 @@ require('lazy').setup({
       { '<leader>tG', '<cmd>LazyGitCurrentFile<cr>', desc = '[T]oggle Lazy[G]it on cur. proj.' },
     },
   },
+  -- https://github.com/akinsho/toggleterm.nvim
+  -- Toggle Terminal
+  -- example setting at: https://github.com/dpetka2001/dotfiles/blob/main/dot_config/nvim/lua/plugins/toggleterm.lua
+  {
+    'akinsho/toggleterm.nvim',
+    -- lazy = true,
+    version = '*',
+    opts = {
+      open_mapping = [[<c-\>]],
+      direction = 'horizontal' or 'vertical' or 'window' or 'float',
+      float_opts = {
+        border = 'single',
+        winblend = 10,
+      },
+      winbar = {
+        enabled = true,
+        -- name_formatter = function(term) --  term: Terminal
+        --   return term.name
+        -- end
+      },
+    },
+    cmd = { 'ToggleTerm', 'TermNew' },
+    keys = {
+      {
+        '<leader>tv',
+        function()
+          local count = vim.v.count1
+          require('toggleterm').toggle(count, vim.o.columns * 0.4, vim.loop.cwd(), 'vertical')
+        end,
+        desc = '[T]oggle ToggleTerm([v]ertical root_dir)',
+      },
+      {
+        '<C-h>',
+        [[<Cmd>wincmd h<CR><Cmd>startinsert<CR>]],
+        mode = { 't' },
+      },
+      {
+        '<C-j>',
+        [[<Cmd>wincmd j<CR><Cmd>startinsert<CR>]],
+        mode = { 't' },
+      },
+      {
+        '<C-k>',
+        [[<Cmd>wincmd k<CR><Cmd>startinsert<CR>]],
+        mode = { 't' },
+      },
+      {
+        '<C-l>',
+        [[<Cmd>wincmd l<CR><Cmd>startinsert<CR>]],
+        mode = { 't' },
+      },
+    },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
