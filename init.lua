@@ -630,9 +630,24 @@ require('lazy').setup({
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
-        virtual_lines = true,
-        float = { border = 'rounded', source = 'if_many' },
-        underline = { severity = vim.diagnostic.severity.ERROR },
+        -- error, warn, info
+        underline = {
+          severity = { min = vim.diagnostic.severity.INFO },
+        },
+        -- error and warn
+        jump = { severity = { min = vim.diagnostic.severity.WARN } },
+        -- only error
+        virtual_lines = {
+          current_line = true,
+          severity = { min = vim.diagnostic.severity.ERROR },
+        },
+        -- only warn
+        virtual_text = {
+          current_line = true,
+          severity = vim.diagnostic.severity.WARN,
+        },
+        -- info, hint, use in combination with custom/diaghover
+        float = { border = 'rounded', source = 'if_many', severity = { max = vim.diagnostic.severity.INFO } },
         signs = vim.g.have_nerd_font and {
           text = {
             [vim.diagnostic.severity.ERROR] = '󰅚 ',
