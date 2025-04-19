@@ -976,6 +976,11 @@ require('lazy').setup({
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+
+      --  Mini.BufRemove, use when you don't want to close window, or close nvim
+      --  when closing a buffer. It will re-attach previous buffer as well!
+      --  The keymap below will execute bufremove, but will confirm
+      --  write if there is any some unsaved change.
       local bufremove = require 'mini.bufremove'
       bufremove.setup()
       vim.keymap.set('n', '<leader>bd', function()
