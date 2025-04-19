@@ -1151,6 +1151,16 @@ require('lazy').setup({
       },
     },
   },
+  -- Custom plugins
+  {
+    'diaghover',
+    dir = '~/.config/nvim/lua/custom/plugins/diaghover',
+    config = function()
+      require('diaghover').setup {
+        keymap = '<leader>H',
+      }
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
