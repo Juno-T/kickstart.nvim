@@ -479,6 +479,20 @@ require('lazy').setup({
       },
     },
   },
+  -- schema store for jsonls and yamlls
+  -- https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/api/json/catalog.json
+  'b0o/schemastore.nvim',
+  {
+    -- https://github.com/someone-stole-my-name/yaml-companion.nvim/issues/44
+    -- We will call setup in the mason setup below.
+    'someone-stole-my-name/yaml-companion.nvim',
+    ft = { 'yaml' },
+    dependencies = {
+      { 'neovim/nvim-lspconfig' },
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope.nvim' },
+    },
+  },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -727,6 +741,29 @@ require('lazy').setup({
             diagnosticSeverity = 'Info',
           },
         },
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
+        yamlls = {
+          -- settings = {
+          --   yaml = {
+          --     schemaStore = {
+          --       -- You must disable built-in schemaStore support if you want to use
+          --       -- this plugin and its advanced options like `ignore`.
+          --       enable = false,
+          --       -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          --       url = '',
+          --     },
+          --     -- Set schemas in yaml-companion.nvim instead.
+          --     -- schemas = require('schemastore').yaml.schemas(),
+          --   },
+          -- },
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -752,6 +789,19 @@ require('lazy').setup({
           },
         },
       }
+
+      -- The yaml-companion.nvim setup.
+      -- Use `:Telescope yaml_schema` to select a schema
+      local yaml_companion_cfg = require('yaml-companion').setup {
+        -- additional schemas
+        schemas = {
+          {
+            name = 'go-oapi-codegen',
+            uri = 'https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json',
+          },
+        },
+      }
+      require('telescope').load_extension 'yaml_schema'
 
       -- Ensure the servers and tools above are installed
       --
@@ -782,6 +832,9 @@ require('lazy').setup({
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
+            if server_name == 'yamlls' then
+              server = vim.tbl_deep_extend('force', {}, yaml_companion_cfg, server)
+            end
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
@@ -985,27 +1038,42 @@ require('lazy').setup({
       -- set use_icons to true if you have a Nerd Font
       statusline.setup {
         use_icons = vim.g.have_nerd_font,
-        active = function()
-          local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-          local git = MiniStatusline.section_git { trunc_width = 40 }
-          local diff = MiniStatusline.section_diff { trunc_width = 75 }
-          local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-          local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
-          local filename = MiniStatusline.section_filename { trunc_width = 140 }
-          local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
-          local location = MiniStatusline.section_location { trunc_width = 75 }
-          local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+        content = {
+          active = function()
+            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local git = MiniStatusline.section_git { trunc_width = 40 }
+            local diff = MiniStatusline.section_diff { trunc_width = 75 }
+            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+            local filename = MiniStatusline.section_filename { trunc_width = 140 }
+            local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
+            local location = MiniStatusline.section_location { trunc_width = 75 }
+            local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+            local function get_schema()
+              local yaml_companion = require 'yaml-companion'
+              if yaml_companion.ctx.schema == nil then
+                return ''
+              end
+              local schema = yaml_companion.get_buf_schema(0)
+              if schema.result[1].name == 'none' then
+                return ''
+              end
+              local name = schema.result[1].name .. '.'
+              return '| ' .. string.match(name, '(.-)%.')
+            end
+            local schema_str = get_schema()
 
-          return MiniStatusline.combine_groups {
-            { hl = mode_hl, strings = { mode } },
-            { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
-            '%<', -- Mark general truncate point
-            { hl = 'MiniStatuslineFilename', strings = { filename } },
-            '%=', -- End left alignment
-            { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-            { hl = mode_hl, strings = { search, location } },
-          }
-        end,
+            return MiniStatusline.combine_groups {
+              { hl = mode_hl, strings = { mode } },
+              { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
+              '%<', -- Mark general truncate point
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              '%=', -- End left alignment
+              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo, schema_str } },
+              { hl = mode_hl, strings = { search, location } },
+            }
+          end,
+        },
       }
 
       -- You can configure sections in the statusline by overriding their
