@@ -1261,6 +1261,25 @@ require('lazy').setup({
       },
     },
   },
+  {
+    -- https://github.com/rmagatti/auto-session
+    'rmagatti/auto-session',
+    lazy = false,
+
+    ---enables autocomplete for opts
+    ---@module "auto-session"
+    ---@type AutoSession.Config
+    opts = {
+      root_dir = vim.fn.stdpath 'data' .. '/auto-session/sessions/',
+      suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+      -- log_level = 'debug',
+    },
+    config = function(_, opts)
+      require('auto-session').setup(opts)
+      -- Removed terminal, since it's buggy with ToggleTerm.
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions'
+    end,
+  },
   -- Custom plugins
   {
     'diaghover',
