@@ -201,8 +201,12 @@ vim.keymap.set({ 'n', 'i' }, '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the 
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- Functional left/right arrow keys, similar to vscode.
-vim.keymap.set({ 'n' }, '<M-b>', 'b', { desc = 'Alt left arrow as `b`' })
-vim.keymap.set({ 'n' }, '<M-f>', 'w', { desc = 'Alt right arrow as `w`' })
+-- Doesn't work with vim motion, intentionally so you are forced to use the traditional keys.
+-- This is only for (mostly vertical) _navigations_.
+vim.keymap.set({ 'n' }, '<M-b>', '7h', { desc = 'Alt left arrow as `7h`' })
+vim.keymap.set({ 'n' }, '<M-f>', '7l', { desc = 'Alt right arrow as `7l`' })
+vim.keymap.set({ 'n' }, '<M-Down>', '10j', { desc = 'Alt Down arrow as `10j`' })
+vim.keymap.set({ 'n' }, '<M-Up>', '10k', { desc = 'Alt Up arrow as `10k`' })
 -- vim.keymap.set({ 'i' }, '<M-b>', '<C-o>b', { desc = 'Alt left arrow as `b`' })
 -- vim.keymap.set({ 'i' }, '<M-f>', '<C-o>w', { desc = 'Alt right arrow as `w`' })
 -- vim.keymap.set({ 'i' }, '', '<C-o>0', { desc = 'Cmd left, to front' })
