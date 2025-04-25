@@ -1165,7 +1165,8 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-
+  require 'custom.plugins.llama_cpp', -- Use <S-Tab> to accept full completion, avoid interfering with blink.cmp
+  require 'custom.plugins.folke_snacks',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
@@ -1323,6 +1324,10 @@ require('lazy').setup({
     },
   },
 })
+
+-- llama.vim highlight
+vim.api.nvim_set_hl(0, 'llama_hl_hint', { fg = '#5f8787', ctermfg = 66 })
+vim.api.nvim_set_hl(0, 'llama_hl_info', { fg = '#6c6c6c', ctermfg = 242 })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
