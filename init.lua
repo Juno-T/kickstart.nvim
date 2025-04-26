@@ -120,6 +120,10 @@ end)
 
 -- Enable break indent
 vim.opt.breakindent = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+-- vim.o.shiftwidth = 4
+vim.o.expandtab = false
 
 -- Save undo history
 vim.opt.undofile = true
@@ -1294,7 +1298,7 @@ require('lazy').setup({
     config = function(_, opts)
       require('auto-session').setup(opts)
       -- Removed terminal, since it's buggy with ToggleTerm.
-      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,localoptions'
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos'
     end,
   },
   -- Custom plugins
