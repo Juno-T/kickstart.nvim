@@ -7,6 +7,7 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
+    git = { enabled = true },
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
@@ -57,8 +58,16 @@ return {
     -- statuscolumn = { enabled = true },
     -- words = { enabled = true },
   },
+  -- https://github.com/folke/snacks.nvim/tree/main?tab=readme-ov-file#-usage
   keys = {
-    -- LazyGit
+    -- Git
+    {
+      '<leader>gb',
+      function()
+        Snacks.git.blame_line()
+      end,
+      desc = '[G]it: [B]lame line',
+    },
     {
       '<leader>gg',
       function()
