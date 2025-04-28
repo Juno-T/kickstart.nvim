@@ -360,6 +360,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>b', group = '[B]uffer' },
+        { '<leader>o', group = '[O]ther' },
       },
     },
   },
@@ -522,6 +523,10 @@ require('lazy').setup({
       { 'nvim-lua/plenary.nvim' },
       { 'nvim-telescope/telescope.nvim' },
     },
+    config = function(_, opts)
+      require('yaml-companion').setup(opts)
+      vim.keymap.set('n', '<leader>Oy', ':Telescope yaml_schema<CR>', { desc = '[Y]aml Schema' })
+    end,
   },
   {
     -- Main LSP Configuration
@@ -1262,6 +1267,7 @@ require('lazy').setup({
       require('auto-session').setup(opts)
       -- Removed terminal, since it's buggy with ToggleTerm.
       vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos'
+      vim.keymap.set('n', '<leader>Os', ':SessionSearch', { desc = '[S]ession :SessionSearch' })
     end,
   },
   -- Custom plugins
