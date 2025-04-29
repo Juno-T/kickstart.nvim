@@ -436,15 +436,18 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local open_with_trouble = require('trouble.sources.telescope').open
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          mappings = {
+            -- i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+            i = { ['<c-t>'] = open_with_trouble },
+            n = { ['<c-t>'] = open_with_trouble },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -1297,6 +1300,69 @@ require('lazy').setup({
         keymap = '<leader>H',
       }
     end,
+  },
+  {
+    'folke/trouble.nvim',
+    ---@class trouble.Mode: trouble.Config,trouble.Section.spec
+
+    ---@class trouble.Config
+    ---@field config? fun(opts:trouble.Config)
+    opts = {
+      auto_close = false,
+      auto_preview = false,
+      focus = true,
+      ---@type trouble.Window.opts
+      preview = {
+        type = 'float',
+        -- when a buffer is not yet loaded, the preview window will be created
+        -- in a scratch buffer with only syntax highlighting enabled.
+        -- Set to false, if you want the preview to always be a real loaded buffer.
+        scratch = true,
+      },
+      -- Useful keys (already set by default)
+      -- r = "refresh",
+      -- R = "toggle_refresh",
+      -- ["<c-s>"] = "jump_split",
+      -- ["<c-v>"] = "jump_vsplit",
+      -- ["}"] = "next",
+      -- ["{"] = "prev",
+      -- p = "preview",
+      -- P = "toggle_preview",
+      -- s = {} -- toggle filter severity
+    }, -- for default options, refer to the configuration section for custom setup.
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>cs',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = 'Symbols (Trouble)',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
+      },
+    },
   },
 }, {
   ui = {
