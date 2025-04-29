@@ -317,6 +317,24 @@ require('lazy').setup({
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
       delay = 0,
+      win = {
+        -- don't allow the popup to overlap with the cursor
+        no_overlap = false,
+        -- width = 1,
+        -- height = { min = 4, max = 25 },
+        -- col = 0,
+        -- row = math.huge,
+        -- border = "none",
+        padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+        title = true,
+        title_pos = 'left',
+        zindex = 1000,
+        -- Additional vim.wo and vim.bo options
+        bo = {},
+        wo = {
+          winblend = 15, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        },
+      },
       icons = {
         -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
