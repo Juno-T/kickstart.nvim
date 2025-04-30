@@ -487,7 +487,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader><leader>', builtin.oldfiles, { desc = '[ ] Find recent files' })
-      -- vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>s<leader>', builtin.buffers, { desc = '[S]earch existing buffers' })
 
       vim.keymap.set('n', '<leader>s.', function()
         builtin.find_files { cwd = vim.uv.cwd() }
@@ -723,6 +723,7 @@ require('lazy').setup({
         -- info, hint, use in combination with custom/diaghover
         float = { border = 'rounded', source = 'if_many', severity = { max = vim.diagnostic.severity.INFO } },
         signs = vim.g.have_nerd_font and {
+          severity = { min = vim.diagnostic.severity.WARN },
           text = {
             [vim.diagnostic.severity.ERROR] = '󰅚 ',
             [vim.diagnostic.severity.WARN] = '󰀪 ',

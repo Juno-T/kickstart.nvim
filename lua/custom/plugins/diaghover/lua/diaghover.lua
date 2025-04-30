@@ -48,7 +48,7 @@ function M.setup(opts)
     end
     -- THIS IS FOR BUILTIN LSP
     vim.diagnostic.open_float {
-      scope = 'line',
+      scope = 'cursor',
       focusable = false,
       severity_sort = true,
       source = true,
@@ -73,7 +73,7 @@ function M.setup(opts)
   vim.api.nvim_create_augroup('lsp_diagnostics_hold', { clear = true })
   vim.api.nvim_create_autocmd({ 'CursorHold' }, {
     pattern = '*',
-    command = 'lua vim.defer_fn(OpenDiagnosticIfNoFloat, 100)',
+    command = 'lua vim.defer_fn(OpenDiagnosticIfNoFloat, 200)',
     group = 'lsp_diagnostics_hold',
   })
   vim.api.nvim_create_autocmd(close_events, {
