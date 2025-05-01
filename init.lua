@@ -1212,6 +1212,7 @@ require('lazy').setup({
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
   require 'custom.plugins.llama_cpp', -- Use <S-Tab> to accept full completion, avoid interfering with blink.cmp
   require 'custom.plugins.folke_snacks',
+  require 'custom.plugins.test_and_debug',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
