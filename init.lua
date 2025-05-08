@@ -792,8 +792,15 @@ require('lazy').setup({
             },
           },
         },
-        ltex = {},
+        ltex = {
+          settings = {
+            ltex = {
+              language = 'en-US',
+            },
+          },
+        },
         typos_lsp = {
+          filetypes = { '*' },
           init_options = {
             diagnosticSeverity = 'Info',
           },
