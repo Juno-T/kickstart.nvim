@@ -1373,6 +1373,22 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'Wansmer/treesj',
+    keys = {
+      'grs',
+      -- '<leader>j',
+      -- '<leader>s'
+    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+    config = function()
+      require('treesj').setup {
+        use_default_keymaps = false,
+      }
+      -- Need to set both in the keys and via vim.keymap.
+      vim.keymap.set('n', 'grs', require('treesj').toggle, { desc = 'Toggle treesj split/join' })
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
