@@ -1022,6 +1022,22 @@ require('lazy').setup({
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
         documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        menu = {
+          draw = {
+            padding = { 0, 1 },
+            columns = {
+              { 'kind_icon' },
+              { 'label', 'label_description', gap = 0 },
+            },
+            components = {
+              kind_icon = {
+                text = function(ctx)
+                  return ' ' .. ctx.kind_icon .. ' '
+                end,
+              },
+            },
+          },
+        },
       },
 
       sources = {
@@ -1049,7 +1065,80 @@ require('lazy').setup({
     },
   },
 
-  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    opts = {
+      dim_inactive = {
+        enabled = true,
+        shade = 'light',
+        percentage = 0.7,
+      },
+      integrations = {
+        -- cmp = true,
+        blink_cmp = true,
+        gitsigns = true,
+        mason = true,
+        -- nvimtree = true,
+        -- treesitter = true,
+        -- notify = false,
+        -- mini = {
+        --     enabled = true,
+        --     indentscope_color = "",
+        -- },
+        lsp_trouble = true,
+        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+      },
+      custom_highlights = function(colors)
+        return {
+          -- Number = { fg = colors.green },
+          -- Constant = { fg = colors.red },
+          -- Function = { fg = colors.green },
+          -- Type = { fg = colors.sky },
+          -- ['@type.builtin'] = { fg = colors.sky },
+          -- String = { fg = colors.peach },
+          -- ['@string.documentation'] = { fg = colors.yellow },
+          -- -- ['@variable'] = { fg = colors.rosewater },
+          -- -- ['@variable.member'] = { fg = colors.rosewater },
+          -- ['@variable.parameter'] = { fg = colors.flamingo },
+          -- ['@variable.builtin'] = { fg = colors.maroon },
+          -- ['@parameter'] = { fg = colors.rosewater },
+          -- ['@module'] = { fg = colors.rosewater },
+          -- Comment = { fg = colors.flamingo },
+          -- TabLineSel = { bg = colors.pink },
+          -- CmpBorder = { fg = colors.surface2 },
+          -- Pmenu = { bg = colors.none },
+          -- CmpItemKindSnippet = { fg = C.base, bg = C.mauve },
+          BlinkCmpKindKeyword = { fg = colors.base, bg = colors.red },
+          BlinkCmpKindText = { fg = colors.base, bg = colors.teal },
+          BlinkCmpKindMethod = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindConstructor = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindFunction = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindFolder = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindModule = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindConstant = { fg = colors.base, bg = colors.peach },
+          BlinkCmpKindField = { fg = colors.base, bg = colors.green },
+          BlinkCmpKindProperty = { fg = colors.base, bg = colors.green },
+          BlinkCmpKindEnum = { fg = colors.base, bg = colors.green },
+          BlinkCmpKindUnit = { fg = colors.base, bg = colors.green },
+          BlinkCmpKindClass = { fg = colors.base, bg = colors.yellow },
+          BlinkCmpKindVariable = { fg = colors.base, bg = colors.flamingo },
+          BlinkCmpKindFile = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindInterface = { fg = colors.base, bg = colors.yellow },
+          BlinkCmpKindColor = { fg = colors.base, bg = colors.red },
+          BlinkCmpKindReference = { fg = colors.base, bg = colors.red },
+          BlinkCmpKindEnumMember = { fg = colors.base, bg = colors.red },
+          BlinkCmpKindStruct = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindValue = { fg = colors.base, bg = colors.peach },
+          BlinkCmpKindEvent = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindOperator = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindTypeParameter = { fg = colors.base, bg = colors.blue },
+          BlinkCmpKindCopilot = { fg = colors.base, bg = colors.teal },
+        }
+      end,
+    },
+  },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
