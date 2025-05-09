@@ -776,6 +776,7 @@ require('lazy').setup({
                 parameterNames = true,
                 rangeVariableTypes = true,
               },
+              semanticTokens = true,
             },
           },
         },
