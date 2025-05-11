@@ -1367,11 +1367,12 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
-  require 'custom.plugins.llama_cpp', -- Use <S-Tab> to accept full completion, avoid interfering with blink.cmp
+  -- require 'custom.plugins.llama_cpp', -- Use <S-Tab> to accept full completion, avoid interfering with blink.cmp
   require 'custom.plugins.folke_snacks',
   require 'custom.plugins.test_and_debug',
 
   require 'custom.plugins.avante', -- depends: blink.cmp
+  -- require 'custom.plugins.llama_vim',
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
@@ -1382,6 +1383,21 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+  {
+    name = 'llama.vim',
+    dir = '~/.config/nvim/lua/custom/plugins/llama.vim',
+    lazy = false,
+    init = function()
+      vim.g.llama_config = {
+        auto_fim = true,
+        auto_fim_debounce_ms = 500,
+        keymap_trigger = '<C-F>',
+        keymap_accept_full = '<S-Tab>',
+        keymap_accept_line = '<C-l>',
+        keymap_accept_word = '<C-B>',
+      }
+    end,
+  },
   {
     'akinsho/toggleterm.nvim',
     -- lazy = true,
