@@ -995,6 +995,11 @@ require('lazy').setup({
         opts = {},
       },
       'folke/lazydev.nvim',
+      {
+        'saghen/blink.compat',
+        optional = false,
+        version = '*',
+      },
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -1056,9 +1061,37 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = {
+          'lsp',
+          'path',
+          'snippets',
+          'lazydev',
+          -- avante
+          'avante_commands',
+          'avante_mentions',
+          'avante_files',
+        },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          -- avante
+          avante_commands = {
+            name = 'avante_commands',
+            module = 'blink.compat.source',
+            score_offset = 90, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_files = {
+            name = 'avante_files',
+            module = 'blink.compat.source',
+            score_offset = 100, -- show at a higher priority than lsp
+            opts = {},
+          },
+          avante_mentions = {
+            name = 'avante_mentions',
+            module = 'blink.compat.source',
+            score_offset = 1000, -- show at a higher priority than lsp
+            opts = {},
+          },
         },
       },
 
@@ -1337,6 +1370,8 @@ require('lazy').setup({
   require 'custom.plugins.llama_cpp', -- Use <S-Tab> to accept full completion, avoid interfering with blink.cmp
   require 'custom.plugins.folke_snacks',
   require 'custom.plugins.test_and_debug',
+
+  require 'custom.plugins.avante', -- depends: blink.cmp
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
