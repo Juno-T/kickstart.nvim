@@ -18,13 +18,40 @@ return {
         model = 'deepseek/deepseek-chat-v3-0324:free',
         disable_tools = true,
         -- suggestions candidates: openai/gpt-4.1-mini, grok3-mini, groq's llama4 scout?
+
+        -- https://openrouter.ai/docs/features/provider-routing
+        provider = {
+          -- data_collection = 'deny', -- doesn't work with free models
+          ignore = { 'Targon', 'Atoma', 'kluster.ai', 'inference.net', 'NovitaAI' }, -- slow/expensive provider
+          max_price = {
+            prompt = 0.001,
+            completion = 0.001,
+          },
+        },
+      },
+      openrouter_paid = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'OPENROUTER_API_KEY',
+        model = 'google/gemini-2.5-flash-preview',
+        disable_tools = false,
+
+        -- https://openrouter.ai/docs/features/provider-routing
+        provider = {
+          data_collection = 'deny', -- doesn't work with free models
+          ignore = { 'Targon', 'Atoma', 'kluster.ai', 'inference.net', 'NovitaAI' }, -- slow/expensive provider
+          max_price = {
+            prompt = 0.5,
+            completion = 0.7,
+          },
+        },
       },
     },
     behaviour = {
       auto_suggestions = false, -- Experimental stage
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
-      auto_apply_diff_after_generation = false,
+      auto_apply_diff_after_generation = true,
       support_paste_from_clipboard = false,
       minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
       enable_token_counting = true, -- Whether to enable token counting. Default to true.
@@ -45,6 +72,11 @@ return {
     --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
     --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
     -- },
+    windows = {
+      sidebar_header = {
+        align = 'right',
+      },
+    },
 
     -- -- https://github.com/yetone/avante.nvim/issues/959
     -- file_selector = {
@@ -94,6 +126,14 @@ return {
         close_from_input = nil, -- e.g., { normal = "<Esc>", insert = "<C-d>" }
       },
     }, -- },
+  },
+  keys = {
+    {
+      '<leader>an',
+      '<Cmd>AvanteChatNew<CR>',
+      mode = { 'n' },
+      { desc = 'Avante New Chat' },
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
