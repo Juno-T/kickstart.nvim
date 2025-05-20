@@ -77,6 +77,9 @@ return {
         align = 'right',
       },
     },
+    selector = {
+      provider = 'telescope',
+    },
 
     -- -- https://github.com/yetone/avante.nvim/issues/959
     -- file_selector = {

@@ -1561,7 +1561,17 @@ require('lazy').setup({
         backgrounds = '',
       },
       code = {
+        -- codeblock
+        border = 'thick',
+        width = 'block',
+        min_width = 60,
+        left_margin = 1,
+        left_pad = 1,
+        right_pad = 1,
+        -- Inline
         inline_pad = 1,
+        inline_left = '',
+        inline_right = '',
       },
       lsp = {
         enabled = true,
