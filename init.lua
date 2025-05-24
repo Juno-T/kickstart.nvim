@@ -1550,5 +1550,29 @@ require('lazy').setup({
 vim.api.nvim_set_hl(0, 'llama_hl_hint', { fg = '#5f8787', ctermfg = 66 })
 vim.api.nvim_set_hl(0, 'llama_hl_info', { fg = '#6c6c6c', ctermfg = 242 })
 
+-- lazygit helper
+-- This requires setting lazygit config as follows:
+-- os:
+--   edit: "nvim --server $NVIM --remote-send '<cmd>close<cr><cmd>lua EditFromLazygit({{filename}})<CR>'"
+--   editAtLine: "nvim --server $NVIM --remote-send '<cmd>close<CR><cmd>lua EditLineFromLazygit({{filename}},{{line}})<CR>'"
+function EditLineFromLazygit(file_path, line)
+  local path = vim.fn.expand '%:p'
+  if path == file_path then
+    vim.cmd(tostring(line))
+  else
+    vim.cmd('e ' .. file_path)
+    vim.cmd(tostring(line))
+  end
+end
+
+function EditFromLazygit(file_path)
+  local path = vim.fn.expand '%:p'
+  if path == file_path then
+    return
+  else
+    vim.cmd('e ' .. file_path)
+  end
+end
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
