@@ -805,12 +805,12 @@ require('lazy').setup({
             },
           },
         },
-        typos_lsp = {
-          filetypes = { '*' },
-          init_options = {
-            diagnosticSeverity = 'Info',
-          },
-        },
+        -- typos_lsp = {
+        --   filetypes = { '*' },
+        --   init_options = {
+        --     diagnosticSeverity = 'Info',
+        --   },
+        -- },
         jsonls = {
           settings = {
             json = {
@@ -872,6 +872,15 @@ require('lazy').setup({
         },
       }
       require('telescope').load_extension 'yaml_schema'
+
+      -- Need brew install typos-lsp manually
+      require('lspconfig').typos_lsp.setup {
+        filetypes = { '*' },
+        init_options = {
+          diagnosticSeverity = 'Info',
+        },
+      }
+      vim.lsp.enable 'typos_lsp'
 
       -- Ensure the servers and tools above are installed
       --
