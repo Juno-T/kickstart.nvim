@@ -1378,22 +1378,22 @@ require('lazy').setup({
       {
         '<C-h>',
         [[<Cmd>wincmd h<CR><Cmd>startinsert<CR>]],
-        mode = { 't' },
+        mode = { 'i', 't' },
       },
       {
         '<C-j>',
         [[<Cmd>wincmd j<CR><Cmd>startinsert<CR>]],
-        mode = { 't' },
+        mode = { 'i', 't' },
       },
       {
         '<C-k>',
         [[<Cmd>wincmd k<CR><Cmd>startinsert<CR>]],
-        mode = { 't' },
+        mode = { 'i', 't' },
       },
       {
         '<C-l>',
         [[<Cmd>wincmd l<CR><Cmd>startinsert<CR>]],
-        mode = { 't' },
+        mode = { 'i', 't' },
       },
     },
   },
